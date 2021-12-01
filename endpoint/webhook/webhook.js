@@ -2,7 +2,7 @@ import moment from 'moment'
 import includes from 'lodash/includes.js'
 import forEach from 'lodash/forEach.js'
 import map from 'lodash/map.js'
-import { sendMessage } from './utilities/sendMessage.js.js'
+import { sendMessage } from './utilities/sendMessage.js'
 import models from '../../models.js'
 
 
