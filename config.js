@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-export default config = {
+export const config = {
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     username: process.env.DB_USERNAME,
