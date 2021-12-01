@@ -11,6 +11,7 @@ const model = {
     recipient_id: Sequelize.STRING,
     sender_id: Sequelize.STRING,
     text: Sequelize.STRING,
+    updated_at: Sequelize.DATE
 }
 
 const initModel = pool => {
