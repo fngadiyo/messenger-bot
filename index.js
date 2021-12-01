@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import config from './config'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -14,6 +14,7 @@ const corsConfig = {
 }
 
 app.use(bodyParser.json())
+console.log(config)
 app.use(cors(corsConfig))
 
 app.get('/', (req, res) => {
