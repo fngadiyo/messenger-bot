@@ -72,11 +72,11 @@ export const interactWebhook = (req, res) => {
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
 
-                    console.log(messageTexts.length >= 2, !includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], !includes(receivedText, ['no', 'nah', 'nope']),
+                    console.log(messageTexts.length >= 2, !includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']), !includes(receivedText, ['no', 'nah', 'nope']),
                     (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope'])),
                         messageTexts.length >= 2
                         && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
-                    );
+                    )
 
                     if (
                         messageTexts.length >= 2
