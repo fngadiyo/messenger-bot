@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 app.use(cors(corsConfig))
 
 app.get('/', (req, res) => {
+	console.log(process.env, 'envhome')
     res.send('hello world')
 })
 
