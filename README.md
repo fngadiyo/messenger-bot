@@ -18,8 +18,8 @@ This bot is developed with Express server and deployed to DigitalOcean with Ngin
 
 ## Rest API
 - https://messenger-bot.fngadiyo.com/api/messages - to fetch all recorded messages
-- https://messenger-bot.fngadiyo.com/api/message?<ID> - to fetch specific message by id
-- https://messenger-bot.fngadiyo.com/api/message/delete?<ID> - to delete specific message by id
+- https://messenger-bot.fngadiyo.com/api/message?id=1 - to fetch specific message by id
+- https://messenger-bot.fngadiyo.com/api/message/delete?id=1 - to delete specific message by id
  
  note: if you already expose your private data to the bot, please use delete method above to remove it from database.
 
