@@ -72,6 +72,20 @@ export const interactWebhook = (req, res) => {
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
 
+                    console.log(messageTexts.length >= 2, !includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], !includes(receivedText, ['no', 'nah', 'nope']),
+                    (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope'])),
+                        messageTexts.length >= 2
+                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
+                    );
+
+                    if (
+                        messageTexts.length >= 2
+                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
+                    ) {
+                        console.log('2messages')
+                        textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
+                    }
+
                     if (includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'])) {
                         const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
                         
@@ -95,14 +109,6 @@ export const interactWebhook = (req, res) => {
                         const today = moment.utc()
                         const daysUntilBirthday = today.diff(birthdayDate, 'days')
                         textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
-                    }
-
-                    if (
-                        messageTexts.length >= 2
-                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
-                    ) {
-                        console.log('2messages')
-                        textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
                     }
 
                     if (includes(receivedText, ['no', 'nah', 'nope'])) {
