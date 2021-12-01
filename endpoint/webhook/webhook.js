@@ -30,7 +30,6 @@ export const interactWebhook = (req, res) => {
 	if (body.object === 'page') {
 		forEach(body.entry, entry => {
 			let webhook_event = entry.messaging[0]
-			console.log(webhook_event)
 			const receivedText = webhook_event.message.text
 			const sender_id = webhook_event.sender.id
             const recipient_id = webhook_event.recipient.id
@@ -44,7 +43,9 @@ export const interactWebhook = (req, res) => {
             })
                 .then((messages) => {
                     if (!messages) {
+                        console.log('no messages')
                         if (includes(receivedText, ['hi', 'hello'])) {
+                            console.log('include hi')
                             textToBeSent = 'Hi! Please tell me your name'
                             sendMessage(sender_id, textToBeSent)
                             return Message.create({
@@ -60,12 +61,18 @@ export const interactWebhook = (req, res) => {
                     const messageTexts = map(messagesResult, message => message.text)
                     const lastResult = messagesResult[messagesResult.length - 1]
                     const lastMessage = messageTexts[messageTexts.length - 1]
+                    
+                    console.log('yes messages')
 
                     if (messageTexts.length === 1) {
+                        
+                        console.log('1messages')
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
 
                     if (messageTexts.length >= 2) {
+                        
+                        console.log('2messages')
                         textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
                         const birthdayDate = moment(receivedText, 'YYYY-MM-DD', true)
 
@@ -82,8 +89,12 @@ export const interactWebhook = (req, res) => {
 
                     if (includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'])) {
                         const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
+                        
+                        console.log('check birthday messages')
 
                         if (!birthdayDate.isValid()) {
+                            
+                            console.log('not valid birthday messages')
                             textToBeSent = 'sorry you typed wrong birthday, please tell me your birthday again with YYYY-MM-DD format. ex: 1992-10-12'
                             sendMessage(sender_id, textToBeSent)
                             return Message.destroy({ // destroy invalid date
@@ -93,15 +104,23 @@ export const interactWebhook = (req, res) => {
                             })
                         }
 
+                        
+                        console.log(' actual birthday messages')
+
                         const today = moment.utc()
                         const daysUntilBirthday = today.diff(birthdayDate, 'days')
                         textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
                     }
 
                     if (includes(receivedText, ['no', 'nah', 'nope'])) {
+                        
+                        console.log('nope')
                         textToBeSent = 'okay, goodbye then!'
 
                     }
+
+                    
+                    console.log('we send' + textToBeSent)
                     
                     sendMessage(sender_id, textToBeSent)
                     

@@ -13,7 +13,6 @@ const corsConfig = {
 }
 
 app.use(bodyParser.json())
-console.log(config)
 app.use(cors(corsConfig))
 
 app.get('/', (req, res) => {
