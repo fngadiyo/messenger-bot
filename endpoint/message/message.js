@@ -1,5 +1,5 @@
 import map from 'lodash/map.js'
-import formatAndSendResponse from '../../utility/formatAndSendResponse.js'
+import formatAndSendResponse from '../../utilities/formatAndSendResponse.js'
 
 const user = {
     getMessage: models => (req, res) => {
