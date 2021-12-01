@@ -2,6 +2,7 @@ import { config } from '../../config.js'
 import moment from 'moment'
 import includes from 'lodash/includes.js'
 import forEach from 'lodash/forEach.js'
+import isEmpty from 'lodash/isEmpty.js'
 import map from 'lodash/map.js'
 import { sendMessage } from '../../utilities/sendMessage.js'
 import models from '../../models.js'
@@ -37,12 +38,11 @@ export const interactWebhook = (req, res) => {
 
             return Message.findAll({
                 where: {
-                    sender_id,
-                    created_at: moment().subtract(7, 'minutes').toDate() // a session only last 5 minutes
+                    sender_id
                 }
             })
                 .then((messages) => {
-                    if (!messages) {
+                    if (isEmpty(messages)) {
                         console.log('no messages')
                         if (includes(receivedText, ['hi', 'hello'])) {
                             console.log('include hi')
