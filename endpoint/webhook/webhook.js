@@ -66,7 +66,7 @@ export const interactWebhook = (req, res) => {
 
                     if (
                         messageTexts.length === 1
-                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) || !includes(receivedText, ['no', 'nah', 'nope']))
+                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
                     ) {
                         console.log('1messages')
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
@@ -99,7 +99,7 @@ export const interactWebhook = (req, res) => {
 
                     if (
                         messageTexts.length >= 2
-                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) || !includes(receivedText, ['no', 'nah', 'nope']))
+                        && (!includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']) && !includes(receivedText, ['no', 'nah', 'nope']))
                     ) {
                         console.log('2messages')
                         textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
