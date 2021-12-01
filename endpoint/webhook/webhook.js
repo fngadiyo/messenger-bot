@@ -1,12 +1,10 @@
-import dotenv from 'dotenv'
+import { config } from '../../config.js'
 import moment from 'moment'
 import includes from 'lodash/includes.js'
 import forEach from 'lodash/forEach.js'
 import map from 'lodash/map.js'
 import { sendMessage } from '../../utilities/sendMessage.js'
 import models from '../../models.js'
-
-dotenv.config()
 
 
 export const verifyWebhook = (req, res) => {
@@ -15,7 +13,7 @@ export const verifyWebhook = (req, res) => {
 	let challenge = req.query['hub.challenge']
 
 	if (mode && token) {
-		if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
+		if (mode === 'subscribe' && token === config.VERIFY_TOKEN) {
 			console.log('WEBHOOK_VERIFIED')
 			res.status(200).send(challenge)
 		
