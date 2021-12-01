@@ -33,85 +33,83 @@ export const interactWebhook = (req, res) => {
 			let webhook_event = entry.messaging[0]
 			const receivedText = webhook_event.message.text
 			const sender_id = webhook_event.sender.id
-            const recipient_id = webhook_event.recipient.id
-            let textToBeSent = 'sorry we can not process your message'
+            		const recipient_id = webhook_event.recipient.id
+            		let textToBeSent = 'sorry we can not process your message'
 
-            return Message.findAll({
-                where: {
-                    sender_id
-                }
-            })
-                .then((messages) => {
-                    if (isEmpty(messages)) {
-                        if (includes(receivedText, ['hi', 'hello'])) {
-                            textToBeSent = 'Hi! Please tell me your name'
-                            sendMessage(sender_id, textToBeSent)
-                            return Message.create({
-                                sender_id,
-                                recipient_id,
-                                text: receivedText
-                            })
-                        }
-                        textToBeSent = `To start the conversation, please great me with 'hi' or 'hello'`
-                        sendMessage(sender_id, textToBeSent)
-                    }
-                    const messagesResult = map(messages, message => message.get({ plain: true }))
-                    const messageTexts = map(messagesResult, message => message.text)
-                    const lastResult = messagesResult[messagesResult.length - 1]
-                    const lastMessage = messageTexts[messageTexts.length - 1]
-                    
-                    if (
-                        messageTexts.length === 1
-                        && (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
-                    ) {
-                        textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
-                    }
+			return Message.findAll({
+			where: { sender_id }
+			})
+			.then((messages) => {
+			    if (isEmpty(messages)) {
+				if (includes(['hi', 'hello'], receivedText)) {
+				    textToBeSent = 'Hi! Please tell me your name'
+				    sendMessage(sender_id, textToBeSent)
+				    return Message.create({
+					sender_id,
+					recipient_id,
+					text: receivedText
+				    })
+				}
+				textToBeSent = `To start the conversation, please great me with 'hi' or 'hello'`
+				sendMessage(sender_id, textToBeSent)
+			    }
+			    const messagesResult = map(messages, message => message.get({ plain: true }))
+			    const messageTexts = map(messagesResult, message => message.text)
+			    const lastResult = messagesResult[messagesResult.length - 1]
+			    const lastMessage = messageTexts[messageTexts.length - 1]
 
-                    if (
-                        messageTexts.length >= 2
-                        && (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
-                    ) {
-                        textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
-                    }
+			    if (
+				messageTexts.length === 1
+				&& (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
+			    ) {
+				textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
+			    }
 
-                    if (includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText)) {
-                        const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
+			    if (
+				messageTexts.length >= 2
+				&& (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
+			    ) {
+				textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
+			    }
 
-                        if (!birthdayDate.isValid()) {
-                            textToBeSent = 'sorry you typed wrong birthday, please tell me your birthday again with YYYY-MM-DD format. ex: 1992-10-12'
-                            sendMessage(sender_id, textToBeSent)
-                            return Message.destroy({ // destroy invalid date
-                                where: {
-                                    id: lastResult.id
-                                }
-                            })
-                        }
+			    if (includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText)) {
+				const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
 
-                        const today = moment.utc()
-                        const daysUntilBirthday = today.diff(birthdayDate, 'days')
-                        textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
-                    }
+				if (!birthdayDate.isValid()) {
+				    textToBeSent = 'sorry you typed wrong birthday, please tell me your birthday again with YYYY-MM-DD format. ex: 1992-10-12'
+				    sendMessage(sender_id, textToBeSent)
+				    return Message.destroy({ // destroy invalid date
+					where: {
+					    id: lastResult.id
+					}
+				    })
+				}
 
-                    if (includes(['no', 'nah', 'nope'], receivedText)) {
-                        textToBeSent = 'okay, goodbye then!'
+				const today = moment.utc()
+				const daysUntilBirthday = today.diff(birthdayDate, 'days')
+				textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
+			    }
 
-                    }
-                    
-                    sendMessage(sender_id, textToBeSent)
-                    
-                    return Message.create({
-                        sender_id,
-                        recipient_id,
-                        text: receivedText
-                    })
-                })
-                .catch((err) => {
-                    console.log(err)
-                    return Promise.reject({
-                        status: 500,
-                        message: 'Internal Server Error'
-                    })
-                })
+			    if (includes(['no', 'nah', 'nope'], receivedText)) {
+				textToBeSent = 'okay, goodbye then!'
+
+			    }
+
+			    sendMessage(sender_id, textToBeSent)
+
+			    return Message.create({
+				sender_id,
+				recipient_id,
+				text: receivedText
+			    })
+			})
+			.catch((err) => {
+			    console.log(err)
+			    return Promise.reject({
+				status: 500,
+				message: 'Internal Server Error'
+			    })
+			})
 		})
 
 		res.status(200).send('EVENT_RECEIVED')
