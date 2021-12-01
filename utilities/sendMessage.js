@@ -20,5 +20,5 @@ export const sendMessage = (recipientId, text) => {
         .then(response => {
             return console.log(response.body, 'res')
         })
-        .catch(err => console.log(config.PAGE_ACCESS_TOKEN, err, err.response.text))
+        .catch(err => console.log(err))
 }

@@ -1,8 +1,6 @@
 import { config } from './config.js'
 import Sequelize from 'sequelize'
 
-console.log(config, 'config')
-
 const connectionPool = new Sequelize({
     host: config.host,
     database: config.database,
