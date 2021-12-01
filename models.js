@@ -3,7 +3,7 @@ import connectionPool from './connectionPool.js'
 import Message from './models/Message.js'
 
 const models = {
-    Mesaage: Message(connectionPool)
+    Message: Message(connectionPool)
 }
 
 forEach(models, model => {
