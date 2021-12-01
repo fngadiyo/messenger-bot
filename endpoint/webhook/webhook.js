@@ -43,9 +43,7 @@ export const interactWebhook = (req, res) => {
             })
                 .then((messages) => {
                     if (isEmpty(messages)) {
-                        console.log('no messages')
                         if (includes(receivedText, ['hi', 'hello'])) {
-                            console.log('include hi')
                             textToBeSent = 'Hi! Please tell me your name'
                             sendMessage(sender_id, textToBeSent)
                             return Message.create({
@@ -62,38 +60,24 @@ export const interactWebhook = (req, res) => {
                     const lastResult = messagesResult[messagesResult.length - 1]
                     const lastMessage = messageTexts[messageTexts.length - 1]
                     
-                    console.log('yes messages', messageTexts.length, includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText))
-
                     if (
                         messageTexts.length === 1
                         && (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
                     ) {
-                        console.log('1messages')
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
-
-                    console.log(messageTexts.length >= 2, !includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText), !includes(['no', 'nah', 'nope'], receivedText),
-                    (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText)),
-                        messageTexts.length >= 2
-                        && (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
-                    )
 
                     if (
                         messageTexts.length >= 2
                         && (!includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText) && !includes(['no', 'nah', 'nope'], receivedText))
                     ) {
-                        console.log('2messages')
                         textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
                     }
 
                     if (includes(['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'], receivedText)) {
                         const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
-                        
-                        console.log('check birthday messages')
 
                         if (!birthdayDate.isValid()) {
-                            
-                            console.log('not valid birthday messages')
                             textToBeSent = 'sorry you typed wrong birthday, please tell me your birthday again with YYYY-MM-DD format. ex: 1992-10-12'
                             sendMessage(sender_id, textToBeSent)
                             return Message.destroy({ // destroy invalid date
@@ -103,22 +87,15 @@ export const interactWebhook = (req, res) => {
                             })
                         }
 
-                        
-                        console.log(' actual birthday messages')
-
                         const today = moment.utc()
                         const daysUntilBirthday = today.diff(birthdayDate, 'days')
                         textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
                     }
 
                     if (includes(['no', 'nah', 'nope'], receivedText)) {
-                        console.log('nope')
                         textToBeSent = 'okay, goodbye then!'
 
                     }
-
-                    
-                    console.log('we send' + textToBeSent)
                     
                     sendMessage(sender_id, textToBeSent)
                     
