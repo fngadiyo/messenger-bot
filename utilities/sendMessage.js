@@ -1,4 +1,7 @@
+import dotenv from 'dotenv'
 import superagent from 'superagent'
+
+dotenv.config()
 
 export const sendMessage = (recipientId, text) => {
     const requestBody = JSON.stringify({
