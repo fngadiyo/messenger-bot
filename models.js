@@ -1,4 +1,5 @@
 import forEach from 'lodash/forEach.js'
+import connectionPool from './connectionPool.js'
 import Message from './models/Message.js'
 
 const models = {
