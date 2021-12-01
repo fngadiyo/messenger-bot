@@ -13,4 +13,6 @@ export const sendMessage = (recipientId, text) => {
               "text": text
             }
         })
+        .then(response => console.log(response, "res"))
+        .catch(err => console.log(err))
 }
