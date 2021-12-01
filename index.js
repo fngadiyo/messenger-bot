@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import routes from './routes.js'
 import { verifyWebhook, interactWebhook } from './endpoint/webhook/webhook.js'
 
 dotenv.config()
@@ -24,5 +25,7 @@ app.post('/webhook', interactWebhook)
 
 // endpoint for verifying connection webhook
 app.get('/webhook', verifyWebhook)
+
+app.use('/api', routes)
 
 app.listen(port, () => console.log(`listening on port: ${port}`))
