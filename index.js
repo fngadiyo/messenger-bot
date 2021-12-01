@@ -34,7 +34,7 @@ app.post('/webhook', (req, res) => {
 			let webhook_event = entry.messaging[0]
 			console.log(webhook_event)
 			const receivedText = webhook_event.message.text
-			const recipientId = webhook_event.recipientId
+			const recipientId = webhook_event.recipient.id
 			console.log(receivedText, recipientId, receivedText.includes('hi'))
 			if (receivedText.includes('hi')) {
 				const textToBeSent = 'please tell me your name'
