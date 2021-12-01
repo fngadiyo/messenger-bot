@@ -62,7 +62,7 @@ export const interactWebhook = (req, res) => {
                     const lastResult = messagesResult[messagesResult.length - 1]
                     const lastMessage = messageTexts[messageTexts.length - 1]
                     
-                    console.log('yes messages')
+                    console.log('yes messages', messageTexts.length, includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea']))
 
                     if (messageTexts.length === 1) {
                         
