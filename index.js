@@ -1,9 +1,10 @@
+import dotenv from 'dotenv'
 import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import { VERIFY_TOKEN } from './config/fbToken.js'
 import { sendMessage } from './utilities/sendMessage.js'
 
+dotenv.config()
 const port = process.env.PORT || 3001
 const app = express()
 const corsConfig = {
@@ -60,15 +61,15 @@ app.get('/webhook', (req, res) => {
 	if (mode && token) {
 
 		// Checks the mode and token sent is correct
-		if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+		if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
 		
-		// Responds with the challenge token from the request
-		console.log('WEBHOOK_VERIFIED')
-		res.status(200).send(challenge)
+			// Responds with the challenge token from the request
+			console.log('WEBHOOK_VERIFIED')
+			res.status(200).send(challenge)
 		
 		} else {
 		// Responds with '403 Forbidden' if verify tokens do not match
-		res.sendStatus(403) 
+			res.sendStatus(403) 
 		}
 	}
 })
