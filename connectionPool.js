@@ -1,5 +1,7 @@
 import Sequelize from 'sequelize'
 
+console.log(process.env.DB_HOST, process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, 'credentials')
+
 const connectionPool = new Sequelize({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
