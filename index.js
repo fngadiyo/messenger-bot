@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {
 	let body = req.body;
+	console.log(body)
 
 	// Checks this is an event from a page subscription
 	if (body.object === 'page') {
@@ -34,6 +35,7 @@ app.post('/webhook', (req, res) => {
 			console.log(webhook_event)
 			const receivedText = webhook_event.message.text
 			const recipientId = webhook_event.recipientId
+			console.log(receivedText, recipientId, receivedText.includes('hi'))
 			if (receivedText.includes('hi')) {
 				const textToBeSent = 'please tell me your name'
 				sendMessage(recipientId, textToBeSent)
