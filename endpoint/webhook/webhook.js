@@ -72,23 +72,6 @@ export const interactWebhook = (req, res) => {
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
 
-                    if (messageTexts.length >= 2) {
-                        
-                        console.log('2messages')
-                        textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
-                        const birthdayDate = moment(receivedText, 'YYYY-MM-DD', true)
-
-                        if (!birthdayDate.isValid()) {
-                            textToBeSent = 'Sorry you typed wrong birthday, please tell me your birthday again with YYYY-MM-DD format. ex: 1992-10-12'
-                            sendMessage(sender_id, textToBeSent)
-                            return Message.destroy({ // destroy invalid date
-                                where: {
-                                    id: lastResult.id
-                                }
-                            })
-                        }
-                    }
-
                     if (includes(receivedText, ['yes', 'yeah', 'yup', 'cool', 'ya', 'yea'])) {
                         const birthdayDate = moment(lastMessage, 'YYYY-MM-DD', true)
                         
@@ -114,8 +97,12 @@ export const interactWebhook = (req, res) => {
                         textToBeSent = `There are ${daysUntilBirthday} days left until your next birthday`
                     }
 
+                    if (messageTexts.length >= 2) {
+                        console.log('2messages')
+                        textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
+                    }
+
                     if (includes(receivedText, ['no', 'nah', 'nope'])) {
-                        
                         console.log('nope')
                         textToBeSent = 'okay, goodbye then!'
 
