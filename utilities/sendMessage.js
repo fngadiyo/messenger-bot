@@ -12,6 +12,9 @@ export const sendMessage = (recipientId, text) => {
               "text": text
             }
         })
-        .then(response => console.log(response, "res"))
-        .catch(err => console.log(err))
+        .then(response => {
+            console.log(process.env.PAGE_ACCESS_TOKEN)
+            return console.log(response, "res")
+        })
+        .catch(err => console.log(process.env.PAGE_ACCESS_TOKEN, err, err.response.text))
 }
