@@ -1,7 +1,6 @@
 import superagent from 'superagent'
 
 export const sendMessage = (recipientId, text) => {
-    console.log(recipientId, text)
     const requestBody = JSON.stringify({
         "messaging_type": "RESPONSE",
         "recipient": {
@@ -11,7 +10,6 @@ export const sendMessage = (recipientId, text) => {
           "text": text
         }
     })
-    console.log(requestBody, 'reqBody')
     return superagent.post(`https://graph.facebook.com/v12.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`)
         .set({
             'Accept': 'application/json',
@@ -19,8 +17,7 @@ export const sendMessage = (recipientId, text) => {
         })
         .send(requestBody)
         .then(response => {
-            console.log(process.env.PAGE_ACCESS_TOKEN)
-            return console.log(response, "res")
+            return console.log(response.body, 'res')
         })
         .catch(err => console.log(process.env.PAGE_ACCESS_TOKEN, err, err.response.text))
 }
