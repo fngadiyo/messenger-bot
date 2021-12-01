@@ -65,7 +65,7 @@ export const interactWebhook = (req, res) => {
                         textToBeSent = `Hi ${text} please tell me your birthday with YYYY-MM-DD format. ex: 1992-10-12`
                     }
 
-                    if (messagesTexts.length >= 2) {
+                    if (messageTexts.length >= 2) {
                         textToBeSent = 'Cool! Do you want to know how many days until your birthday?'
                         const birthdayDate = moment(receivedText, 'YYYY-MM-DD', true)
 
