@@ -1,3 +1,4 @@
+import superagent from 'superagent'
 import { PAGE_ACCESS_TOKEN } from '../config/fbToken.js'
 
 export const sendMessage = (recipientId, text) => {
